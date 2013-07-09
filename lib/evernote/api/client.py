@@ -104,7 +104,7 @@ class EvernoteClient(object):
         return client
 
     def _get_endpoint(self, path=None):
-        url = "https://%s" % (self.service_host)
+        url = "http://%s" % (self.service_host)
         if path is not None:
             url += "/%s" % path
         return url
@@ -142,6 +142,7 @@ class Store(object):
         return delegate_method
 
     def _get_thrift_client(self, client_class, url):
+        url = url.replace("https", "http")
         http_client = THttpClient.THttpClient(url)
         http_client.addHeaders(**{
             'User-Agent': "%s / %s; Python / %s;"
